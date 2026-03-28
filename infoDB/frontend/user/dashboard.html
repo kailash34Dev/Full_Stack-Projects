@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InfoDB | Profile</title>
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --coral: #ff6b47;
+            --coral-dim: rgba(255, 107, 71, .12);
+            --coral-mid: rgba(255, 107, 71, .25);
+            --bg: #1a1a1a;
+            --surface: #222222;
+            --surface2: #2a2a2a;
+            --border: #333333;
+            --text: #f0f0f0;
+            --muted: #888888;
+            --radius: 14px;
+            --nav-h: 72px;
+            --side-w: 240px;
+            --error: #ff4d4d;
+            --success: #4caf82;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            height: var(--nav-h);
+            background: var(--surface);
+            border-bottom: 2px solid var(--coral);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 250;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1600px;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .nav-logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--muted);
+            letter-spacing: -0.5px;
+            transition: color .2s;
+        }
+
+        .nav-logo:hover {
+            color: #c0c0c0;
+        }
+
+        .nav-logo .highlight {
+            color: var(--coral);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .nav-greeting {
+            font-size: .8rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .nav-greeting strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .profile-icon {
+            width: 46px;
+            height: 46px;
+            border: 2px solid var(--coral);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            background: var(--coral-dim);
+            transition: background .2s, transform .2s;
+        }
+
+        .profile-icon:hover {
+            background: var(--coral-mid);
+            transform: scale(1.05);
+        }
+
+        .profile-icon .profile-name {
+            color: var(--coral);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .profile-icon .badge {
+            background: var(--coral);
+            color: #fff;
+            font-size: .6rem;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 20px;
+            position: absolute;
+            top: -6px;
+            right: -22px;
+            white-space: nowrap;
+        }
+
+        /* ── HAMBURGER ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 40px;
+            height: 40px;
+            background: var(--coral-dim);
+            border: 1px solid var(--coral);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background .2s;
+            flex-shrink: 0;
+            z-index: 300;
+        }
+
+        .hamburger:hover {
+            background: var(--coral-mid);
+        }
+
+        .hamburger span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: var(--coral);
+            border-radius: 2px;
+            transition: transform .3s ease, opacity .3s ease;
+            transform-origin: center;
+            pointer-events: none;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* ── LAYOUT ── */
+        .layout {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - var(--nav-h));
+        }
+
+        /* ── OVERLAY ── */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s ease;
+        }
+
+        .sidebar-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ── SIDEBAR ── */
+        .side-bar {
+            width: var(--side-w);
+            flex-shrink: 0;
+            background: var(--surface);
+            border-right: 1px solid var(--coral);
+            padding: 36px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            position: sticky;
+            top: var(--nav-h);
+            height: calc(100vh - var(--nav-h));
+            overflow-y: auto;
+            transition: transform .3s ease;
+        }
+
+        .sidebar-section-label {
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--muted);
+            padding: 14px 12px 6px;
+            font-weight: 600;
+        }
+
+        .sidebar-link a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-size: .875rem;
+            font-weight: 500;
+            color: var(--muted);
+            transition: all .2s;
+        }
+
+        .sidebar-link a:hover {
+            background: var(--coral-dim);
+            color: var(--text);
+        }
+
+        .sidebar-link a.current {
+            background: var(--coral);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(255, 107, 71, .3);
+        }
+
+        .sidebar-link a svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        .sidebar-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 10px 12px;
+        }
+
+        /* ── MAIN ── */
+        .main-content {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .page-header-text h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -.3px;
+        }
+
+        .page-header-text p {
+            font-size: .85rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            animation: fadeUp .4s ease both;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card-title-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--coral);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .card-title-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .edit-badge {
+            font-size: .65rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: var(--coral-dim);
+            color: var(--coral);
+            border: 1px solid var(--coral);
+            display: none;
+        }
+
+        .editing .edit-badge {
+            display: inline-block;
+        }
+
+        /* ── SKELETON ── */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.35;
+            }
+        }
+
+        .skeleton-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .skeleton-label {
+            height: 10px;
+            width: 40%;
+            background: var(--border);
+            border-radius: 5px;
+            animation: pulse 1.4s ease infinite;
+        }
+
+        .skeleton-input {
+            height: 40px;
+            background: var(--border);
+            border-radius: 9px;
+            animation: pulse 1.4s ease infinite;
+        }
+
+        .skeleton-input.tall {
+            height: 90px;
+        }
+
+        /* ── PAGE LOAD ERROR ── */
+        .page-error {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            padding: 48px 0;
+            color: var(--muted);
+        }
+
+        .page-error svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--coral);
+            fill: none;
+            stroke-width: 2;
+            margin-bottom: 8px;
+        }
+
+        .retry-btn {
+            background: var(--coral-dim);
+            color: var(--coral);
+            border: 1px solid var(--coral);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .retry-btn:hover {
+            background: var(--coral);
+            color: #fff;
+        }
+
+        /* ── FORM SECTIONS ── */
+        .form-section-label {
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--coral);
+            font-weight: 600;
+            margin: 8px 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .form-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field.span-2 {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: .3px;
+        }
+
+        label .req {
+            color: var(--coral);
+            margin-left: 2px;
+        }
+
+        /* ── INPUTS ── */
+        input,
+        select,
+        textarea {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 9px;
+            padding: 10px 14px;
+            font-size: .85rem;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s, background .25s, padding .25s, border-color .25s;
+            width: 100%;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: var(--muted);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--coral);
+            box-shadow: 0 0 0 3px var(--coral-dim);
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            padding-right: 36px;
+        }
+
+        select option {
+            background: var(--surface2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        /* ── DISABLED / VIEW MODE ── */
+        input:disabled,
+        select:disabled,
+        textarea:disabled {
+            background: transparent;
+            border-color: transparent;
+            color: var(--text);
+            cursor: default;
+            opacity: 1;
+            background-image: none;
+            /* remove select arrow */
+            padding-left: 2px;
+        }
+
+        /* Subtle left bar on view-mode fields */
+        .field.view-mode .input-wrap::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .field.view-mode .input-wrap input,
+        .field.view-mode .input-wrap select {
+            padding-left: 10px;
+        }
+
+        .field.view-mode textarea {
+            padding-left: 10px;
+            border-left: 2px solid var(--border);
+            border-radius: 0 9px 9px 0;
+        }
+
+        /* ── VALIDATION ── */
+        .field.error input,
+        .field.error select,
+        .field.error textarea {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(255, 77, 77, .1);
+        }
+
+        .field.success input,
+        .field.success select,
+        .field.success textarea {
+            border-color: var(--success);
+        }
+
+        .field-msg {
+            font-size: .7rem;
+            font-weight: 500;
+            min-height: 16px;
+            transition: color .2s;
+        }
+
+        .field.error .field-msg {
+            color: var(--error);
+        }
+
+        .field.success .field-msg {
+            color: var(--success);
+        }
+
+        /* ── INPUT ICONS ── */
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap svg {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            stroke-width: 2;
+            fill: none;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .input-wrap input,
+        .input-wrap select {
+            padding-right: 36px;
+        }
+
+        .icon-ok {
+            stroke: var(--success);
+            display: none;
+        }
+
+        .icon-err {
+            stroke: var(--error);
+            display: none;
+        }
+
+        .field.success .icon-ok {
+            display: block;
+        }
+
+        .field.error .icon-err {
+            display: block;
+        }
+
+        .input-wrap select~svg {
+            display: none;
+        }
+
+        .field.error .input-wrap select~.icon-err,
+        .field.success .input-wrap select~.icon-ok {
+            display: block;
+            right: 35px;
+        }
+
+        /* Hide icons in view mode */
+        .field.view-mode .icon-ok,
+        .field.view-mode .icon-err {
+            display: none !important;
+        }
+
+        /* ── BUTTONS ── */
+        .btn-edit {
+            background: var(--surface2);
+            color: var(--text);
+            border: 1px solid var(--coral);
+            border-radius: 10px;
+            padding: 10px 22px;
+            font-size: .85rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .btn-edit:hover {
+            background: var(--coral-dim);
+        }
+
+        .btn-edit svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--coral);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .btn-submit {
+            background: var(--coral);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 13px 32px;
+            font-size: .9rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: background .2s, transform .15s, box-shadow .2s;
+            box-shadow: 0 4px 16px rgba(255, 107, 71, .3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            background: #e85a38;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(255, 107, 71, .4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit svg {
+            width: 16px;
+            height: 16px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .btn-cancel {
+            background: var(--surface2);
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 13px 24px;
+            font-size: .9rem;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .btn-cancel:hover {
+            border-color: var(--coral);
+            color: var(--text);
+        }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .actions-edit {
+            display: none;
+            gap: 12px;
+        }
+
+        /* ── DELETE BUTTON ── */
+        .btn-delete {
+            background: transparent;
+            color: var(--error);
+            border: 1px solid rgba(255, 77, 77, .35);
+            border-radius: 10px;
+            padding: 10px 22px;
+            font-size: .85rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .btn-delete:hover {
+            background: rgba(255, 77, 77, .1);
+            border-color: var(--error);
+        }
+
+        .btn-delete svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--error);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ── MODAL BACKDROP ── */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .65);
+            backdrop-filter: blur(3px);
+            z-index: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s ease;
+        }
+
+        .modal-backdrop.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ── MODAL BOX ── */
+        .modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 32px 28px 28px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
+            transform: translateY(20px) scale(.97);
+            transition: transform .3s cubic-bezier(.34, 1.3, .64, 1), opacity .25s ease;
+            opacity: 0;
+        }
+
+        .modal-backdrop.open .modal {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 18px;
+        }
+
+        .modal-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .modal-icon.danger {
+            background: rgba(255, 77, 77, .12);
+        }
+
+        .modal-icon.danger svg {
+            stroke: var(--error);
+        }
+
+        .modal-icon.warning {
+            background: rgba(255, 193, 7, .12);
+        }
+
+        .modal-icon.warning svg {
+            stroke: #f5c542;
+        }
+
+        .modal-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .modal-desc {
+            font-size: .82rem;
+            color: var(--muted);
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 26px;
+        }
+
+        .modal-desc strong {
+            color: var(--text);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: .875rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all .2s;
+            border: none;
+        }
+
+        .modal-btn-confirm-delete {
+            background: var(--error);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(255, 77, 77, .3);
+        }
+
+        .modal-btn-confirm-delete:hover {
+            background: #e03333;
+            transform: translateY(-1px);
+        }
+
+        .modal-btn-confirm-edit {
+            background: var(--coral);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(255, 107, 71, .3);
+        }
+
+        .modal-btn-confirm-edit:hover {
+            background: #e85a38;
+            transform: translateY(-1px);
+        }
+
+        .modal-btn-cancel-modal {
+            background: var(--surface2);
+            color: var(--muted);
+            border: 1px solid var(--border) !important;
+        }
+
+        .modal-btn-cancel-modal:hover {
+            border-color: var(--coral) !important;
+            color: var(--text);
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: var(--surface);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: .82rem;
+            font-weight: 500;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all .4s cubic-bezier(.34, 1.56, .64, 1);
+            z-index: 500;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--success);
+            fill: none;
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .side-bar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                z-index: 200;
+                transform: translateX(-100%);
+                padding-top: calc(var(--nav-h) + 20px);
+                box-shadow: 4px 0 32px rgba(0, 0, 0, .4);
+            }
+
+            .side-bar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay {
+                display: block;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .field.span-2 {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-greeting {
+                display: none;
+            }
+
+            .nav-container {
+                padding: 0 16px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toast {
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+                <a href="#" class="nav-logo">Info<span class="highlight">DB</span></a>
+            </div>
+            <div class="nav-right">
+                <span class="nav-greeting">Welcome back, <strong>Kaleem</strong></span>
+                <div class="profile-icon">
+                    <span class="badge">User</span>
+                    <span class="profile-name">K</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="layout">
+        <aside class="side-bar" id="sidebar">
+            <div class="sidebar-section-label">Menu</div>
+            <div class="sidebar-link">
+                <a href="#" class="current">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Profile
+                </a>
+            </div>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-link">
+                <a href="/logout.html">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                    Log Out
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <div class="page-header-text">
+                    <h1>Your Profile</h1>
+                    <p>Your personal information. Click <strong>Edit Profile</strong> to make changes.</p>
+                </div>
+            </div>
+
+            <div class="card" id="profileCard">
+                <div class="card-title">
+                    <div class="card-title-left">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        Profile Information
+                        <span class="edit-badge">Editing</span>
+                    </div>
+                    <div class="card-title-actions">
+                        <span id="accountStatusBadge" class="status-pill"
+                            style="display: none; margin-right: 8px; text-transform: capitalize; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; align-items: center; justify-content: center;"></span>
+                        <button class="btn-edit" id="editBtn">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                            </svg>
+                            Edit Profile
+                        </button>
+                        <button class="btn-delete" id="deleteBtn">
+                            <svg viewBox="0 0 24 24">
+                                <polyline points="3 6 5 6 21 6" />
+                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                                <path d="M10 11v6" />
+                                <path d="M14 11v6" />
+                                <path d="M9 6V4h6v2" />
+                            </svg>
+                            Mark Account for Deletion
+                        </button>
+                    </div>
+                </div>
+
+                <div id="profileContent">
+                    <!-- Skeleton shown on first load -->
+                    <div id="skeletonUI">
+                        <div class="form-section-label">Basic Info</div>
+                        <div class="form-grid" style="margin-bottom:24px">
+                            <div class="skeleton-field">
+                                <div class="skeleton-label"></div>
+                                <div class="skeleton-input"></div>
+                            </div>
+                            <div class="skeleton-field">
+                                <div class="skeleton-label"></div>
+                                <div class="skeleton-input"></div>
+                            </div>
+                            <div class="skeleton-field">
+                                <div class="skeleton-label"></div>
+                                <div class="skeleton-input"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error state (hidden by default) -->
+                    <div id="errorUI" style="display:none">
+                        <div class="page-error" style="text-align: center; padding: 40px;">
+                            <p id="errorMsg" style="color: var(--muted);">Could not load profile data.</p>
+                            <button class="btn-submit" onclick="fetchDashboard()"
+                                style="margin-top: 15px; padding: 8px 16px;">Retry</button>
+                        </div>
+                    </div>
+
+                    <div id="profileForm" style="display:none">
+
+                        <div class="form-section-label">Basic Info</div>
+                        <div class="form-grid">
+                            <div class="field view-mode" id="f-role">
+                                <label>Account Role</label>
+                                <div class="input-wrap">
+                                    <input type="text" id="role" disabled
+                                        style="text-transform: capitalize; background: var(--surface-hover); color: var(--muted); cursor: not-allowed;" />
+                                </div>
+                            </div>
+                            <div class="field view-mode" id="f-email">
+                                <label>Email Address <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="email" id="email" value="kaleem@example.com" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-email"></span>
+                            </div>
+                            <div class="field view-mode" id="f-name">
+                                <label>Full Name <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="text" id="name" value="Kaleem Ahmed" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-name"></span>
+                            </div>
+                            <div class="field view-mode" id="f-dob">
+                                <label>Date of Birth <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="date" id="dob" value="1998-05-14" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-dob"></span>
+                            </div>
+                            <div class="field view-mode" id="f-gender">
+                                <label>Gender <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <select id="gender" disabled>
+                                        <option value="">— Select —</option>
+                                        <option value="male" selected>Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-gender"></span>
+                            </div>
+                            <div class="field view-mode" id="f-maritialStatus">
+                                <label>Marital Status <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <select id="maritialStatus" disabled>
+                                        <option value="">— Select —</option>
+                                        <option value="single" selected>Single</option>
+                                        <option value="married">Married</option>
+                                        <option value="divorced">Divorced</option>
+                                        <option value="widowed">Widowed</option>
+                                    </select>
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-maritialStatus"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-section-label">Contact</div>
+                        <div class="form-grid">
+                            <div class="field view-mode" id="f-phoneNo">
+                                <label>Phone Number <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="tel" id="phoneNo" value="+91 98765 43210" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-phoneNo"></span>
+                            </div>
+                            <div class="field view-mode" id="f-whatsAPPNo">
+                                <label>WhatsApp Number <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="tel" id="whatsAPPNo" value="+91 98765 43210" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-whatsAPPNo"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-section-label">Address</div>
+                        <div class="form-grid">
+                            <div class="field span-2 view-mode" id="f-address">
+                                <label>Street Address <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="text" id="address" value="42 Altamount Road" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-address"></span>
+                            </div>
+                            <div class="field view-mode" id="f-city">
+                                <label>City <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="text" id="city" value="Mumbai" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-city"></span>
+                            </div>
+                            <div class="field view-mode" id="f-state">
+                                <label>State <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="text" id="state" value="Maharashtra" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-state"></span>
+                            </div>
+                            <div class="field view-mode" id="f-country">
+                                <label>Country <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="text" id="country" value="India" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-country"></span>
+                            </div>
+                            <div class="field view-mode" id="f-pincode">
+                                <label>Pincode <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="text" id="pincode" value="400026" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-pincode"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-section-label">Professional</div>
+                        <div class="form-grid">
+                            <div class="field view-mode" id="f-education">
+                                <label>Education <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <select id="education" disabled>
+                                        <option value="">— Select —</option>
+                                        <option value="high_school">High School/12th</option>
+                                        <option value="diploma">Diploma</option>
+                                        <option value="bachelor" selected>Bachelor's Degree</option>
+                                        <option value="master">Master's Degree</option>
+                                        <option value="phd">PhD / Doctorate</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-education"></span>
+                            </div>
+                            <div class="field view-mode" id="f-occupation">
+                                <label>Occupation <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <input type="text" id="occupation" value="Software Engineer" disabled />
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-occupation"></span>
+                            </div>
+                            <div class="field view-mode" id="f-income">
+                                <label>Annual Income <span class="req">*</span></label>
+                                <div class="input-wrap">
+                                    <select id="income" disabled>
+                                        <option value="">— Select —</option>
+                                        <option value="below_2l">Below ₹2 LPA</option>
+                                        <option value="2l_5l">₹2 – 5 LPA</option>
+                                        <option value="5l_10l" selected>₹5 – 10 LPA</option>
+                                        <option value="10l_20l">₹10 – 20 LPA</option>
+                                        <option value="above_20l">Above ₹20 LPA</option>
+                                    </select>
+                                    <svg class="icon-ok" viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <svg class="icon-err" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </div>
+                                <span class="field-msg" id="msg-income"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-section-label">About</div>
+                        <div class="form-grid full" style="margin-bottom: 0;">
+                            <div class="field view-mode" id="f-bio">
+                                <label>Bio <span class="req">*</span></label>
+                                <textarea id="bio"
+                                    disabled>A passionate software engineer based in Mumbai with a love for building clean, user-friendly applications.</textarea>
+                                <span class="field-msg" id="msg-bio"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="margin-top: 24px;">
+                            <div class="actions-edit" id="actionsEdit">
+                                <button class="btn-submit" id="saveBtn" type="button">
+                                    <svg viewBox="0 0 24 24">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    Save Changes
+                                </button>
+                                <button class="btn-cancel" id="cancelBtn" type="button">Cancel</button>
+                            </div>
+                        </div>
+                    </div> <!-- Close profileForm -->
+                </div> <!-- Close profileContent -->
+            </div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12" />
+        </svg>
+        <span>Profile updated successfully!</span>
+    </div>
+
+    <!-- ── DELETE CONFIRMATION MODAL ── -->
+    <div class="modal-backdrop" id="deleteModalBackdrop">
+        <div class="modal">
+            <div class="modal-icon danger">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                    <path d="M10 11v6" />
+                    <path d="M14 11v6" />
+                    <path d="M9 6V4h6v2" />
+                </svg>
+            </div>
+            <div class="modal-title">Delete Profile?</div>
+            <div class="modal-desc">
+                This action is <strong>permanent and cannot be undone.</strong><br>
+                All your personal data will be erased from our system.
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn-cancel-modal" id="deleteCancelBtn">Keep Profile</button>
+                <button class="modal-btn-confirm-delete" id="deleteConfirmBtn">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── EDIT CONFIRMATION MODAL ── -->
+    <div class="modal-backdrop" id="editModalBackdrop">
+        <div class="modal">
+            <div class="modal-icon warning">
+                <svg viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                </svg>
+            </div>
+            <div class="modal-title">Save Changes?</div>
+            <div class="modal-desc">
+                You're about to update your profile information.<br>
+                Please confirm that all the details are <strong>correct before saving.</strong>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn-cancel-modal" id="editCancelBtn">Go Back</button>
+                <button class="modal-btn-confirm-edit" id="editConfirmBtn">
+                    Yes, Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/baseAPI.js"></script>
+    <script src="../js/userDashboard.js"></script>
+</body>
+
+</html>

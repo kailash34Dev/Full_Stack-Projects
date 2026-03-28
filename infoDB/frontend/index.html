@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InfoDB</title>
+  <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <script src="/js/baseAPI.js"></script>
+  <script src="/js/isUserLogedIn.js"></script>
+  <style>
+    nav {
+      height: 70px;
+      border-bottom: 2px solid;
+      border-color: coral;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      height: 80%;
+      width: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #7c7c7c;
+    }
+
+    .heilight {
+      color: coral
+    }
+
+    .nav-logo:hover {
+      color: #b1b1b1
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn-outline {
+      padding: 8px 30px;
+      border: 2px solid coral;
+      color: coral;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background-color: coral;
+      color: white;
+    }
+
+    .btn-solid {
+      padding: 8px 30px;
+      background-color: coral;
+      color: white;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-solid:hover {
+      background-color: rgb(255, 115, 64);
+    }
+
+    .hero {
+      padding: 100px 0;
+    }
+
+    .hero-content {
+      max-width: 1400px;
+      width: 60%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      color: #eeeeee;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      color: #b1b1b1;
+      opacity: 0.6;
+    }
+
+    .hero-btns {
+      justify-content: center;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: rgb(255, 109, 56);
+      padding: 20px;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      width: 80%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero-content {
+        width: 90%;
+      }
+
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-container {
+        width: 90%;
+      }
+
+      .btn-group {
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .hero-content h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        Info<span class="heilight">DB</span>
+      </a>
+      <div class="btn-group">
+        <a href="/login.html" class="btn-outline">Login</a>
+        <a href="/signup.html" class="btn-solid">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Your all in one data management platform <span class="heilight">InfoDB</span></h1>
+      <p>Your one-stop solution for data management and insights.</p>
+      <div class="btn-group hero-btns">
+        <a href="/login.html" class="btn-outline">Login</a>
+        <a href="/signup.html" class="btn-solid">Sign Up</a>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-content">
+      <p>&copy;
+        <script>document.write(new Date().getFullYear())</script> InfoDB. All rights reserved.
+      </p>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InfoDB | Profile Setup</title>
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/onboarding.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="/js/baseAPI.js"></script>
+    <script src="/js/fetchOnboarding.js"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#" class="nav-logo">Info<span class="highlight">DB</span></a>
+            </div>
+        </div>
+    </nav>
+    <div class="layout">
+        <main class="main-content">
+            <div class="page-header">
+                <div class="page-header-text">
+                    <h1>Finish Setting Up Your Profile</h1>
+                    <p>Just one more step. Add your details below to complete your account setup.</p>
+                </div>
+            </div>
+            <div class="error-container" id="server-error">
+                <span class="error-message server-error">Some Error</span>
+                <i class="fa-solid fa-xmark close-error" id="closeError"></i>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Profile Information
+                </div>
+                <div id="profileForm">
+                    <div class="form-section-label">Basic Info</div>
+                    <div class="form-grid">
+                        <div class="field" id="f-email">
+                            <label>Email Address <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="email" id="email" value="" readonly />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-email"></span>
+                        </div>
+                        <div class="field" id="f-name">
+                            <label>Full Name <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="text" id="name" placeholder="John Doe" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-name"></span>
+                        </div>
+                        <div class="field" id="f-dob">
+                            <label>Date of Birth <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="date" id="dob" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-dob"></span>
+                        </div>
+                        <div class="field" id="f-gender">
+                            <label>Gender <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <select id="gender">
+                                    <option value="">— Select —</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-gender"></span>
+                        </div>
+                        <div class="field" id="f-maritalStatus">
+                            <label>Marital Status <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <select id="maritalStatus">
+                                    <option value="">— Select —</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
+                                    <option value="divorced">Divorced</option>
+                                    <option value="widowed">Widowed</option>
+                                </select>
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-maritalStatus"></span>
+                        </div>
+                    </div>
+                    <div class="form-section-label">Contact</div>
+                    <div class="form-grid">
+                        <div class="field" id="f-phoneNo">
+                            <label>Phone Number <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="tel" id="phoneNo" placeholder="+91 98765 43210" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-phoneNo"></span>
+                        </div>
+                        <div class="field" id="f-whatsAPPNo">
+                            <label>WhatsApp Number <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="tel" id="whatsAPPNo" placeholder="+91 98765 43210" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-whatsAPPNo"></span>
+                        </div>
+                    </div>
+                    <div class="form-section-label">Address</div>
+                    <div class="form-grid">
+                        <div class="field span-2" id="f-address">
+                            <label>Street Address <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="text" id="address" placeholder="Altamount Road" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-address"></span>
+                        </div>
+                        <div class="field" id="f-city">
+                            <label>City <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="text" id="city" placeholder="Mumbai" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-city"></span>
+                        </div>
+                        <div class="field" id="f-state">
+                            <label>State <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="text" id="state" placeholder="Maharashtra" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-state"></span>
+                        </div>
+                        <div class="field" id="f-country">
+                            <label>Country <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="text" id="country" placeholder="India" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-country"></span>
+                        </div>
+                        <div class="field" id="f-pincode">
+                            <label>Pincode <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="text" id="pinCode" placeholder="400001" maxlength="6" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-pincode"></span>
+                        </div>
+                    </div>
+                    <div class="form-section-label">Professional</div>
+                    <div class="form-grid">
+                        <div class="field" id="f-education">
+                            <label>Education <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <select id="education">
+                                    <option value="">— Select —</option>
+                                    <option value="high_school">High School/12th</option>
+                                    <option value="diploma">Diploma</option>
+                                    <option value="bachelor">Bachelor's Degree</option>
+                                    <option value="master">Master's Degree</option>
+                                    <option value="phd">PhD / Doctorate</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-education"></span>
+                        </div>
+                        <div class="field" id="f-occupation">
+                            <label>Occupation <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <input type="text" id="occupation" placeholder="Software Engineer" />
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-occupation"></span>
+                        </div>
+                        <div class="field" id="f-income">
+                            <label>Annual Income <span class="req">*</span></label>
+                            <div class="input-wrap">
+                                <select id="income">
+                                    <option value="">— Select —</option>
+                                    <option value="below_2l">Below ₹2 LPA</option>
+                                    <option value="2l_5l">₹2 – 5 LPA</option>
+                                    <option value="5l_10l">₹5 – 10 LPA</option>
+                                    <option value="10l_20l">₹10 – 20 LPA</option>
+                                    <option value="above_20l">Above ₹20 LPA</option>
+                                </select>
+                                <svg class="icon-ok" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <svg class="icon-err" viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="field-msg" id="msg-income"></span>
+                        </div>
+                    </div>
+                    <div class="form-section-label">About</div>
+                    <div class="form-grid full" style="margin-bottom: 0;">
+                        <div class="field" id="f-bio">
+                            <label>Bio <span class="req">*</span></label>
+                            <textarea id="bio" placeholder="Write a short bio about yourself…"></textarea>
+                            <span class="field-msg" id="msg-bio"></span>
+                        </div>
+                    </div>
+                    <div class="form-actions" style="margin-top: 24px;">
+                        <button class="btn-submit" id="submitBtn" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Save Profile
+                        </button>
+                        <button class="btn-reset" id="resetBtn" type="button">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <div class="success-state" id="successState">
+                <div class="success-icon-wrap">
+                    <div class="success-ring success-ring-1"></div>
+                    <div class="success-ring success-ring-2"></div>
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <h2 class="success-title">Profile Saved!</h2>
+                <p class="success-subtitle">Your profile has been set up successfully.<br>You're all set to get started.
+                </p>
+                <div class="success-details">
+                    <div class="success-detail-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        <span id="success-name">—</span>
+                    </div>
+                    <div class="success-detail-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                        <span id="success-email">—</span>
+                    </div>
+                    <div class="success-detail-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        <span id="success-location">—</span>
+                    </div>
+                </div>
+                <a href="" class="btn-dashboard" id="onboard-success-btn">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    Go to Dashboard
+                </a>
+            </div>
+        </main>
+    </div>
+    <script src="/js/formUtils.js"></script>
+    <script src="/js/onboardingValidation.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>infoDB | Signup</title>
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/toast.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .toast {
+            top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <div class="form-container">
+        <h1>Signup to <span>infoDB</span></h1>
+        <div class="form-div">
+            <div class="error-container" id="server-error">
+                <span class="error-message server-error">Some</span>
+                <i class="fa-solid fa-xmark close-error" id="closeError"></i>
+            </div>
+            <form id="form" novalidate>
+                <div class="input-group">
+                    <label for="email">Email<sup>*</sup></label>
+                    <div class="input" id="email-group">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <span class="error-message" id="email-error"></span>
+                </div>
+                <div class="input-group">
+                    <label for="role">Role<sup>*</sup></label>
+                    <div class="input" id="role-group">
+                        <i class="fa-solid fa-user"></i>
+                        <select id="role" name="role" required>
+                            <option value="" disabled selected>Select a role</option>
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <span class="error-message" id="role-error"></span>
+                </div>
+                <div class="input-group password-group">
+                    <label for="password">Password<sup>*</sup></label>
+                    <div class="input" id="password-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <i class="fa-solid fa-eye fa-eye-slash" id="toggle-password"></i>
+                    </div>
+                    <span class="error-message" id="password-error"></span>
+                </div>
+                <button type="submit" class="form-btn signup-btn">
+                    <span class="btn-txt">Signup</span>
+                    <span class="spinner"></span>
+                </button>
+                <p class="signup-login-link">Already have an account? <a href="/login.html">Login</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="/js/baseAPI.js"></script>
+    <script src="/js/formUtils.js"></script>
+    <script src="/js/toast.js"></script>
+    <script src="/js/signupValidation.js"></script>
+</body>
+
+</html>

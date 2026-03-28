@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InfoDB | Logout</title>
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/toast.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --coral: #ff6b47;
+            --coral-dim: rgba(255, 107, 71, .12);
+            --coral-mid: rgba(255, 107, 71, .25);
+            --bg: #1a1a1a;
+            --surface: #222222;
+            --surface2: #2a2a2a;
+            --border: #333333;
+            --text: #f0f0f0;
+            --muted: #888888;
+            --radius: 14px;
+            --nav-h: 72px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        nav {
+            height: var(--nav-h);
+            background: var(--surface);
+            border-bottom: 2px solid var(--coral);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 250;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1600px;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .nav-logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--muted);
+            letter-spacing: -0.5px;
+            transition: color .2s;
+        }
+
+        .nav-logo:hover {
+            color: #c0c0c0;
+        }
+
+        .nav-logo .highlight {
+            color: var(--coral);
+        }
+
+        .logout-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+        }
+
+        .logout-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px 32px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            animation: fadeUp .4s ease both;
+        }
+
+        .logout-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            background: var(--coral-dim);
+            border: 2px solid var(--coral);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--coral);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .logout-card h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .logout-card p {
+            font-size: .9rem;
+            color: var(--muted);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .logout-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-logout {
+            background: var(--coral);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 13px 24px;
+            font-size: .9rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: background .2s, transform .15s, box-shadow .2s;
+            box-shadow: 0 4px 16px rgba(255, 107, 71, .3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-logout:hover {
+            background: #e85a38;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(255, 107, 71, .4);
+        }
+
+        .btn-logout:active {
+            transform: translateY(0);
+        }
+
+        .btn-logout svg {
+            width: 16px;
+            height: 16px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .btn-cancel {
+            background: var(--surface2);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 13px 24px;
+            font-size: .9rem;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .btn-cancel:hover {
+            border-color: var(--coral);
+            color: var(--coral);
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 16px;
+            }
+
+            .logout-card {
+                padding: 32px 24px;
+            }
+
+            .logout-icon {
+                width: 64px;
+                height: 64px;
+            }
+
+            .logout-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="nav-logo">Info<span class="highlight">DB</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="logout-wrapper">
+        <div class="logout-card">
+            <div class="logout-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </div>
+            <h1>Logout</h1>
+            <p>Are you sure you want to end your session? You'll need to sign in again to access your account.</p>
+
+            <div class="logout-actions">
+                <button class="btn-logout" id="confirmLogout" type="button">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Yes, Logout
+                </button>
+                <button class="btn-cancel" id="cancelLogout" type="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script src="/js/baseAPI.js"></script>
+    <script src="/js/toast.js"></script>
+    <script src="/js/logout.js"></script>
+</body>
+
+</html>
