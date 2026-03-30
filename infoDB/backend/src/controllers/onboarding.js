@@ -94,10 +94,13 @@ exports.editProfile = async (req, res) => {
       bio,
     } = req.body;
 
-    let reqUserId = req.query.id;
+    const reqUserId = req.query.id;
+    let targetedDBUser;
 
     if (reqUserId === "self" || !reqUserId) {
-      reqUserId = req.currUser.id;
+      targetedDBUser = { user: req.currUser.id };
+    } else {
+      targetedDBUser = { _id: reqUserId };
     }
 
     const updateData = {
@@ -120,13 +123,13 @@ exports.editProfile = async (req, res) => {
       bio,
     };
 
-    const updatedProfile = await Profile.findByIdAndUpdate(
-      reqUserId,
+    const updatedProfile = await Profile.findOneAndUpdate(
+      targetedDBUser,
       updateData,
       {
         runValidators: true,
-        returnDocument: 'after',
-      }
+        returnDocument: "after",
+      },
     );
 
     if (!updatedProfile) {
