@@ -6,10 +6,26 @@ infoDB is a full-stack web application designed to manage and display user profi
 
 ## 🌐 Live Demo
 
-- 🚀 Frontend: https://infodb-frontend.vercel.app
-- ⚙️ Backend API: https://your-backend-link.onrender.com
+- 🚀 Frontend: <a href="https://infodb-frontend.vercel.app" target="_blank">Open Frontend</a>
+- ⚙️ Backend API: <a href="https://infodb-backend.onrender.com" target="_blank">Open Backend</a>
 
 > ⚠️ Note: The backend is hosted on Render's free tier. It may take 20–30 seconds to respond on the first request after inactivity (cold start).
+
+---
+
+## 🔑 Demo Credentials
+
+You can use the following accounts to explore the application:
+
+### 👤 User Account
+
+- Email: user1@gmail.com
+- Password: USERuser123@
+
+### 🛠️ Admin Account
+
+- Email: admin1@gmail.com
+- Password: ADMINadmin123@
 
 ---
 
