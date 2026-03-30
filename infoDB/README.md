@@ -9,8 +9,6 @@ infoDB is a full-stack web application designed to manage and display user profi
 - 🚀 Frontend: <a href="https://infodb-frontend.vercel.app" target="_blank">Open Frontend</a>
 - ⚙️ Backend API: <a href="https://infodb-backend.onrender.com" target="_blank">Open Backend</a>
 
-> ⚠️ Note: The backend is hosted on Render's free tier. It may take 20–30 seconds to respond on the first request after inactivity (cold start).
-
 ---
 
 ## 🔑 Demo Credentials
