@@ -98,7 +98,9 @@ function populateFields(profile) {
       if (!opt) {
         opt = [...el.options].find((o) => {
           const oVal = o.value.toLowerCase();
-          return (oVal && valStr.includes(oVal)) || (valStr && oVal.includes(valStr));
+          return (
+            (oVal && valStr.includes(oVal)) || (valStr && oVal.includes(valStr))
+          );
         });
       }
 
@@ -523,8 +525,16 @@ function initModals() {
         });
         if (res.ok) {
           showToast("delete");
+          const isSelfDelete = !userId || userId === "self";
           setTimeout(() => {
-            window.location.href = "/admin/dashboard.html";
+            if (isSelfDelete) {
+              // Admin deleted their own profile — log out
+              localStorage.removeItem("token");
+              window.location.href = "/login.html";
+            } else {
+              // Admin deleted another user — go back to dashboard
+              window.location.href = "/admin/dashboard.html";
+            }
           }, 1500);
         } else {
           console.error("[Profile] Delete failed:", res.status);

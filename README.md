@@ -10,7 +10,7 @@ This repository contains a collection of full-stack applications built using mod
 
 A full-stack application for managing and displaying user information.
 
-- 🌐 Live Demo: <a href="https://infodb-frontend.vercel.app" target="_blank">View Project</a>
+- 🌐 Live Demo: https://infodb-frontend.vercel.app
 
 👉 For more details, see [`infoDB/README.md`](./infoDB/README.md)
 

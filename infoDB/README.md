@@ -1,15 +1,31 @@
 # 📊 infoDB – Full Stack User Information Platform
 
-infoDB is a full-stack web application designed to manage and display user profile data efficiently. It demonstrates a practical implementation of RESTful APIs, secure authentication, and scalable backend architecture.
+infoDB is a full-stack web application designed to manage and display user profile data efficiently. It demonstrates a practical implementation of RESTful APIs, secure authentication, and a scalable backend architecture.
 
 ---
 
 ## 🌐 Live Demo
 
 - 🚀 Frontend: https://infodb-frontend.vercel.app
-- ⚙️ Backend API: https://your-backend-link.onrender.com
+- ⚙️ Backend API: https://infodb-backend.onrender.com
 
-> ⚠️ Note: The backend is hosted on Render's free tier. It may take 20–30 seconds to respond on the first request after inactivity (cold start).
+> ⚠️ Note: The backend is hosted on Render's free tier. It may take 40–120 seconds to respond on the first request after inactivity (cold start).
+
+---
+
+## 🔑 Demo Credentials
+
+You can use the following accounts to explore the application:
+
+### 👤 User Account
+
+- **Email:** user1@gmail.com
+- **Password:** USERuser123@
+
+### 🛠️ Admin Account
+
+- **Email:** admin1@gmail.com
+- **Password:** ADMINadmin123@
 
 ---
 
@@ -19,10 +35,11 @@ infoDB allows users to:
 
 - Create and manage user profiles
 - Store structured data securely in a database
-- Authenticate and authorize users securely using JWT tokens
+- Authenticate and authorize users using JWT tokens
 - Interact with a clean and responsive interface
+- Perform seamless data operations using AJAX without page reloads
 
-This project focuses on building a **real-world backend system** with security and role-based access control and connecting it seamlessly with a frontend client.
+This project focuses on building a **real-world backend system** with strong security, role-based access control, and smooth frontend-backend communication.
 
 ---
 
@@ -31,6 +48,7 @@ This project focuses on building a **real-world backend system** with security a
 ### Frontend
 
 - HTML, CSS, JavaScript
+- AJAX (for asynchronous API calls)
 
 ### Backend
 
@@ -54,37 +72,44 @@ This project focuses on building a **real-world backend system** with security a
 
 - 🔐 Secure authentication using JWT
 - 👤 Role-based access control (Admin/User)
-- RESTful API design
-- CRUD operations (Create, Read, Update, Delete)
-- Structured data modeling using MongoDB
-- Error handling and validation
-- Environment-based configuration
+- 🔄 AJAX-based asynchronous data fetching
+- 🌐 RESTful API design
+- 🧾 CRUD operations (Create, Read, Update, Delete)
+- 📦 Structured data modeling using MongoDB
+- ⚠️ Centralized error handling and validation
+- 🔑 Secure handling of user credentials
+- 🌍 Environment-based configuration
 
 ---
 
 ## 🧩 Industry Practices Used
 
 - 🔐 **Authentication & Authorization**
-  Implemented JWT-based authentication and protected routes
+  JWT-based authentication with protected routes
 
 - 🛡️ **Role-Based Access Control (RBAC)**
-  Restricted sensitive actions based on user roles (admin/user)
+  Restricts actions based on user roles (admin/user)
+
+- 🔄 **AJAX Integration**
+  Enables dynamic updates without page reload
 
 - 📁 **Modular Architecture**
-  Separation of concerns using routes, controllers, and models
+  Separation using routes, controllers, and models
 
 - 🔐 **Environment Variables**
-  Sensitive data handled via `.env` files
+  Sensitive data handled using `.env` files
 
 - 🌐 **CORS Configuration**
-  Secure cross-origin communication between frontend and backend
+  Secure frontend-backend communication
 
 - ⚠️ **Error Handling Middleware**
-  Centralized error management for cleaner code
+  Centralized error management
 
 - 🚀 **Deployment Ready Structure**
-  Configured for cloud platforms like Render and Vercel
+  Optimized for Vercel and Render
 
 ---
 
-⭐ If you found this project useful, consider giving it a star!
+## ⭐ Support
+
+If you found this project useful, consider giving it a star!
