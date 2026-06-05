@@ -81,10 +81,10 @@ Ensure your MySQL server is running. No need to manually create the database; th
    ```
 
 ### 4. Access the Application
-- Open your browser and navigate to: `http://localhost:5173/`
 - Use the initial root admin credentials seeded during initialization to login:
   - **Email**: `admin@labplus.com`
   - **Password**: `admin123`
+  After that you can create department wise lab maintainer accout and .....
 
 ## 💻 Tech Stack
 - **Frontend**: React.js, Vite, Tailwind CSS, Lucide React
