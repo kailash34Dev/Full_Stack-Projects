@@ -38,11 +38,19 @@ Ensure your MySQL server is running. No need to manually create the database; th
    ```
 3. Create a `.env` file in the `backend` directory based on the following template:
    ```env
+   # Database
    DB_HOST=localhost
    DB_USER=root
    DB_PASSWORD=your_mysql_password
    DB_NAME=LabPlus
+
+   # JWT
    JWT_SECRET=your_super_secret_jwt_key
+
+   # Email
+   EMAIL_USER=your_email_username
+   EMAIL_PASS=your_password
+   
    PORT=10500
    ```
 4. Initialize the database (this will create the DB, tables, and seed initial data including the root admin user):
