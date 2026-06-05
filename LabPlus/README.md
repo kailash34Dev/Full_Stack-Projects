@@ -73,7 +73,7 @@ Ensure your MySQL server is running. No need to manually create the database; th
    ```
 3. Create a `.env` file in the `frontend` directory:
    ```env
-   API_BASE_URL=http://localhost:10500
+   API_BASE_URL=your_api_base_url
    ```
 4. Start the frontend development server:
    ```bash
