@@ -84,7 +84,7 @@ Ensure your MySQL server is running. No need to manually create the database; th
 - Use the initial root admin credentials seeded during initialization to login:
   - **Email**: `admin@labplus.com`
   - **Password**: `admin123`
-  After that you can create department wise lab maintainer accout and .....
+  - After that you can create department wise lab maintainer accout ....
 
 ## 💻 Tech Stack
 - **Frontend**: React.js, Vite, Tailwind CSS, Lucide React
