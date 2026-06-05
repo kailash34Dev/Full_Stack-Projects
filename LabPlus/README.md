@@ -2,6 +2,13 @@
 
 LabPlus is a comprehensive platform designed to manage university labs with precision. It provides a state-of-the-art interface to streamline asset scanning, maintenance ticketing, and inventory management for laboratories.
 
+## 🌐 Live Demo
+The project is live! You can access the deployed application here:
+- **Live Application**: https://labplus-frontend-production.up.railway.app/
+- **Backend API**: https://labplus-backend-production.up.railway.app/
+
+*Note: The frontend and backend are hosted on [Railway] and the MySQL database is hosted on [Aiven.io].*
+
 ## 🚀 Features
 - **Asset Management**: Seamlessly manage, categorize, and track lab equipment.
 - **Maintenance Ticketing**: Quickly raise and track maintenance tickets for lab assets.

@@ -14,6 +14,14 @@ A full-stack application for managing and displaying user information.
 
 👉 For more details, see [`infoDB/README.md`](./infoDB/README.md)
 
+### 2. LabPlus
+
+A platform designed to manage university labs with asset scanning, maintenance ticketing, and inventory management.
+
+- 🌐 Live Demo: https://labplus-frontend-production.up.railway.app/
+
+👉 For more details, see [`LabPlus/README.md`](./LabPlus/README.md)
+
 ---
 
 ## 📈 Goals of This Repository
